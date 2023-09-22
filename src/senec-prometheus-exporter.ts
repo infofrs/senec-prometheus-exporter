@@ -6,7 +6,7 @@ import fetch from 'node-fetch';
 import { hex2float } from './utils';
 import { Payload, ResponsePayload } from './types';
 
-const DEFAULT_HTTP_PORT = 9898;
+const DEFAULT_https_PORT = 9898;
 const expr: Express = express();
 expr.get('/metrics', async (req, res) => {
   res.set('Content-Type', register.contentType);
@@ -29,7 +29,7 @@ const options: ClientOptions = yargs
       type: 'string',
       demandOption: true,
     },
-    port: { description: 'Used HTTP port', default: DEFAULT_HTTP_PORT },
+    port: { description: 'Used https port', default: DEFAULT_https_PORT },
     wallbox: {
       alias: 'w',
       description: 'Scrape info about wallbox',
@@ -163,7 +163,7 @@ function exposeWallboxMetrics(data: ResponsePayload) {
 
 async function readSenecData(options: ClientOptions) {
   try {
-    const response = await fetch(`http://${options.host}/lala.cgi`, {
+    const response = await fetch(`https://${options.host}/lala.cgi`, {
       method: 'POST',
       body: JSON.stringify(generatePayload(options)),
     });
